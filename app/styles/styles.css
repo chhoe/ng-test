@@ -1,0 +1,76 @@
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/home\/user\/PhpstormProjects\/AngularFullstack\/app\/styles\/styles\.scss;
+  }
+
+  line {
+    font-family: \000031;
+  }
+}
+
+.slide.ng-leave {
+  position: relative;
+}
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/home\/user\/PhpstormProjects\/AngularFullstack\/app\/styles\/styles\.scss;
+  }
+
+  line {
+    font-family: \000034;
+  }
+}
+
+.slide.ng-enter {
+  position: absolute;
+}
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/home\/user\/PhpstormProjects\/AngularFullstack\/app\/styles\/styles\.scss;
+  }
+
+  line {
+    font-family: \000037;
+  }
+}
+
+.slide.ng-enter,
+.slide.ng-leave {
+  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+}
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/home\/user\/PhpstormProjects\/AngularFullstack\/app\/styles\/styles\.scss;
+  }
+
+  line {
+    font-family: \0000313;
+  }
+}
+
+.slide.ng-enter,
+.slide.ng-leave.ng-leave-active {
+  -webkit-transform: scaleX(0.0001);
+  transform: scaleX(0.0001);
+  opacity: 0;
+}
+
+@media -sass-debug-info {
+  filename {
+    font-family: file\:\/\/\/home\/user\/PhpstormProjects\/AngularFullstack\/app\/styles\/styles\.scss;
+  }
+
+  line {
+    font-family: \0000319;
+  }
+}
+
+.slide,
+.slide.ng-enter.ng-enter-active {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  opacity: 1;
+}

@@ -87,21 +87,21 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
             // resolved before instantiation. Non-promise return values are considered
             // to be resolved immediately.
             resolve: {
-              contacts: ['contacts',
+              contactsData: ['contacts',
                 function (contacts) {
                   return contacts.all();
                 }]
             },
 
             // You can pair a controller to your template. There *must* be a template to pair with.
-            controller: ['$scope', '$state', 'contacts', 'utils',
-              function ($scope, $state, contacts, utils) {
+            controller: ['$scope', '$state', 'contactsData', 'utils',
+              function ($scope, $state, contactsData, utils) {
 
                 // Add a 'contacts' field in this abstract parent's scope, so that all
                 // child state views can access it in their scopes. Please note: scope
                 // inheritance is not due to nesting of states, but rather choosing to
                 // nest the templates of those states. It's normal scope inheritance.
-                $scope.contacts = contacts;
+                $scope.contacts = contactsData;
 
                 $scope.goToRandom = function () {
                   var randId = utils.newRandomKey($scope.contacts, "id", $state.params.contactId);
@@ -155,6 +155,13 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
             // and the $stateParams object becomes { contactId: 42 }.
             url: '/{contactId:[0-9]{1,4}}',
 
+            resolve: {
+              contactsData: ['contacts',
+                function (contacts) {
+                  return contacts.all();
+                }]
+            },
+
             // If there is more than a single ui-view in the parent template, or you would
             // like to target a ui-view from even higher up the state tree, you can use the
             // views object to configure multiple views. Each view can get its own template,
@@ -165,13 +172,12 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
             // Absolute view names use a '@' symbol to distinguish the view and the state.
             // So 'foo@bar' means the ui-view named 'foo' within the 'bar' state's template.
             views: {
-
               // So this one is targeting the unnamed view within the parent state's template.
               '': {
                 templateUrl: 'partials/contacts.detail.html',
-                controller: ['$scope', '$stateParams', 'utils',
-                  function ($scope, $stateParams, utils) {
-                    $scope.contact = utils.findById($scope.contacts, $stateParams.contactId);
+                controller: ['$scope', '$stateParams', 'contactsData', 'utils',
+                  function ($scope, $stateParams, contactsData, utils) {
+                    $scope.contact = utils.findById(contactsData, $stateParams.contactId);
                   }]
               },
 
@@ -206,6 +212,14 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
             // '/contacts/{contactId}/item/:itemId'. We are using both types of parameters
             // in the same url, but they behave identically.
             url: '/item/:itemId',
+
+            resolve: {
+              contactsData: ['contacts',
+                function (contacts) {
+                  return contacts.all();
+                }]
+            },
+
             views: {
 
               // This is targeting the unnamed ui-view within the parent state 'contact.detail'
@@ -213,18 +227,11 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
               // We could instead just set templateUrl and controller outside of the view obj.
               '': {
                 templateUrl: 'partials/contacts.detail.item.html',
-                controller: ['$scope', '$stateParams', '$state',
-                  function ($scope, $stateParams, $state) {
+                controller: ['$scope', '$stateParams', 'contactsData', '$state', 'utils',
+                  function ($scope, $stateParams, contactsData, $state, utils) {
+                    $scope.contact = utils.findById(contactsData, $stateParams.contactId);
                     $scope.itemType = $stateParams.itemId;
                     $scope.itemProperties = $scope.contact.properties;
-                    //$scope.itemValue = $scope.contact.properties[$scope.itemType];
-/*
-                    var itemId = $stateParams.itemId;
-                    $scope.item = {
-                      type: itemId,
-                      value: $scope.contact.properties[itemId]
-                    };
-*/
 
                     $scope.edit = function () {
                       // Here we show off go's ability to navigate to a relative state. Using '^' to go upwards
@@ -250,6 +257,14 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
           // simply to organize your application into "places" where each "place" can configure
           // only what it needs. The only way to get to this state is via $state.go (or transitionTo)
           .state('contacts.detail.item.edit', {
+
+            resolve: {
+              contactsData: ['contacts',
+                function (contacts) {
+                  return contacts.all();
+                }]
+            },
+
             views: {
 
               // This is targeting the unnamed view within the 'contact.detail' state
@@ -257,11 +272,11 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
               // had inserted with this state's template.
               '@contacts.detail': {
                 templateUrl: 'partials/contacts.detail.item.edit.html',
-                controller: ['$scope', '$stateParams', '$state',
-                  function ($scope, $stateParams, $state) {
+                controller: ['$scope', '$stateParams', 'contactsData', '$state', 'utils',
+                  function ($scope, $stateParams, contactsData, $state, utils) {
+                    $scope.contact = utils.findById(contactsData, $stateParams.contactId);
                     $scope.itemType = $stateParams.itemId;
                     $scope.itemProperties = $scope.contact.properties;
-                    //$scope.itemValue = $scope.contact.properties[$scope.itemType];
 
                     $scope.done = function () {
                       // Go back up. '^' means up one. '^.^' would be up twice, to the grandparent.

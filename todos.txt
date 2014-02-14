@@ -1,8 +1,10 @@
 AngularJs Todos
 ------------------------
-Refactor data model
-Update von Daten Service basiert
+
+Use service for contact data (not scope!) & update data automatically
+Load data with ngBusy instead of update data automatically
 ngAnimate reparieren
+Refactor State Controllers to separate files
 Update von Daten Event basiert
 ngBusy
 Daten persistieren

@@ -1,10 +1,13 @@
 AngularJs Todos
 ------------------------
-Update von Daten Event basiert
+Refactor data model
 Update von Daten Service basiert
+ngAnimate reparieren
+Update von Daten Event basiert
 ngBusy
 Daten persistieren
 Update Angular and Bootstrap
 AnguarUI Components einsetzen
 Testing
 Struktur von angular-fullstack oder angular-app abbilden
+use HTML5 History

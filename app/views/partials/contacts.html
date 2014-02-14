@@ -11,7 +11,7 @@
             ng-class="{ active: $state.includes('contacts.detail') && $stateParams.contactId == contact.id }">
 
           <!-- Here's a ui-sref that is also providing necessary parameters -->
-          <a ui-sref="contacts.detail({contactId:contact.id})">{{contact.name}}</a>
+          <a ui-sref="contacts.detail({contactId:contact.id})">{{contact.properties.name}}</a>
         </li>
       </ul>
       <hr>

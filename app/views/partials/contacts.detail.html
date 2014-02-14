@@ -1,12 +1,12 @@
 <div>
-  <h2>{{contact.name}}</h2>
+  <h2>{{contact.properties.name}}</h2>
   <ul>
-    <li ng-repeat="item in contact.items">
+    <li ng-repeat="(key, value) in contact.properties">
 
       <!-- Here's another ui-sref except THIS time we are passing parameters
            AND inheriting parameters from active ancestor states. So we don't
            need to resupply the contactId parameter. -->
-      <a ui-sref="contacts.detail.item({itemId:item.id})">{{item.type}}</a>
+      <a ui-sref="contacts.detail.item({itemId:key})">{{key}}</a>
     </li>
   </ul>
   <div ui-view class="slide">

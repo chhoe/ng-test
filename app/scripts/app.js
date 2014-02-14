@@ -1,5 +1,6 @@
 // Make sure to include the `ui.router` module as a dependency
 angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
+
   .run(
     [        '$rootScope', '$state', '$stateParams',
       function ($rootScope, $state, $stateParams) {
@@ -212,9 +213,18 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
               // We could instead just set templateUrl and controller outside of the view obj.
               '': {
                 templateUrl: 'partials/contacts.detail.item.html',
-                controller: ['$scope', '$stateParams', '$state', 'utils',
-                  function ($scope, $stateParams, $state, utils) {
-                    $scope.item = utils.findById($scope.contact.items, $stateParams.itemId);
+                controller: ['$scope', '$stateParams', '$state',
+                  function ($scope, $stateParams, $state) {
+                    $scope.itemType = $stateParams.itemId;
+                    $scope.itemProperties = $scope.contact.properties;
+                    //$scope.itemValue = $scope.contact.properties[$scope.itemType];
+/*
+                    var itemId = $stateParams.itemId;
+                    $scope.item = {
+                      type: itemId,
+                      value: $scope.contact.properties[itemId]
+                    };
+*/
 
                     $scope.edit = function () {
                       // Here we show off go's ability to navigate to a relative state. Using '^' to go upwards
@@ -247,9 +257,12 @@ angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
               // had inserted with this state's template.
               '@contacts.detail': {
                 templateUrl: 'partials/contacts.detail.item.edit.html',
-                controller: ['$scope', '$stateParams', '$state', 'utils',
-                  function ($scope, $stateParams, $state, utils) {
-                    $scope.item = utils.findById($scope.contact.items, $stateParams.itemId);
+                controller: ['$scope', '$stateParams', '$state',
+                  function ($scope, $stateParams, $state) {
+                    $scope.itemType = $stateParams.itemId;
+                    $scope.itemProperties = $scope.contact.properties;
+                    //$scope.itemValue = $scope.contact.properties[$scope.itemType];
+
                     $scope.done = function () {
                       // Go back up. '^' means up one. '^.^' would be up twice, to the grandparent.
                       $state.go('^', $stateParams);

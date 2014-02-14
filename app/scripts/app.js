@@ -1,8 +1,21 @@
-// Make sure to include the `ui.router` module as a dependency.
-angular.module('uiRouterSample')
+// Make sure to include the `ui.router` module as a dependency
+angular.module('uiRouterSample', ['ui.router', 'ngAnimate'])
+  .run(
+    [        '$rootScope', '$state', '$stateParams',
+      function ($rootScope, $state, $stateParams) {
+
+        // It's very handy to add references to $state and $stateParams to the $rootScope
+        // so that you can access them from any scope within your applications.For example,
+        // <li ng-class="{ active: $state.includes('contacts.list') }"> will set the <li>
+        // to active whenever 'contacts.list' or one of its decendents is active.
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+      }])
+
+  // States config
   .config(
     [          '$stateProvider', '$urlRouterProvider',
-      function ($stateProvider,   $urlRouterProvider) {
+      function ($stateProvider, $urlRouterProvider) {
 
         /////////////////////////////
         // Redirects and Otherwise //
@@ -74,14 +87,14 @@ angular.module('uiRouterSample')
             // to be resolved immediately.
             resolve: {
               contacts: ['contacts',
-                function( contacts){
+                function (contacts) {
                   return contacts.all();
                 }]
             },
 
             // You can pair a controller to your template. There *must* be a template to pair with.
             controller: ['$scope', '$state', 'contacts', 'utils',
-              function (  $scope,   $state,   contacts,   utils) {
+              function ($scope, $state, contacts, utils) {
 
                 // Add a 'contacts' field in this abstract parent's scope, so that all
                 // child state views can access it in their scopes. Please note: scope
@@ -156,7 +169,7 @@ angular.module('uiRouterSample')
               '': {
                 templateUrl: 'partials/contacts.detail.html',
                 controller: ['$scope', '$stateParams', 'utils',
-                  function (  $scope,   $stateParams,   utils) {
+                  function ($scope, $stateParams, utils) {
                     $scope.contact = utils.findById($scope.contacts, $stateParams.contactId);
                   }]
               },
@@ -172,7 +185,7 @@ angular.module('uiRouterSample')
                 // templateProvider is the final method for supplying a template.
                 // There is: template, templateUrl, and templateProvider.
                 templateProvider: ['$stateParams',
-                  function (        $stateParams) {
+                  function ($stateParams) {
                     // This is just to demonstrate that $stateParams injection works for templateProvider.
                     // $stateParams are the parameters for the new state we're transitioning to, even
                     // though the global '$stateParams' has not been updated yet.
@@ -200,7 +213,7 @@ angular.module('uiRouterSample')
               '': {
                 templateUrl: 'partials/contacts.detail.item.html',
                 controller: ['$scope', '$stateParams', '$state', 'utils',
-                  function (  $scope,   $stateParams,   $state,   utils) {
+                  function ($scope, $stateParams, $state, utils) {
                     $scope.item = utils.findById($scope.contact.items, $stateParams.itemId);
 
                     $scope.edit = function () {
@@ -235,7 +248,7 @@ angular.module('uiRouterSample')
               '@contacts.detail': {
                 templateUrl: 'partials/contacts.detail.item.edit.html',
                 controller: ['$scope', '$stateParams', '$state', 'utils',
-                  function (  $scope,   $stateParams,   $state,   utils) {
+                  function ($scope, $stateParams, $state, utils) {
                     $scope.item = utils.findById($scope.contact.items, $stateParams.itemId);
                     $scope.done = function () {
                       // Go back up. '^' means up one. '^.^' would be up twice, to the grandparent.
@@ -255,15 +268,15 @@ angular.module('uiRouterSample')
 
             // Showing off how you could return a promise from templateProvider
             templateProvider: ['$timeout',
-              function (        $timeout) {
+              function ($timeout) {
                 return $timeout(function () {
                   return '<p class="lead">UI-Router Resources</p><ul>' +
-                           '<li><a href="https://github.com/angular-ui/ui-router/tree/master/sample">Source for this Sample</a></li>' +
-                           '<li><a href="https://github.com/angular-ui/ui-router">Github Main Page</a></li>' +
-                           '<li><a href="https://github.com/angular-ui/ui-router#quick-start">Quick Start</a></li>' +
-                           '<li><a href="https://github.com/angular-ui/ui-router/wiki">In-Depth Guide</a></li>' +
-                           '<li><a href="https://github.com/angular-ui/ui-router/wiki/Quick-Reference">API Reference</a></li>' +
-                         '</ul>';
+                    '<li><a href="https://github.com/angular-ui/ui-router/tree/master/sample">Source for this Sample</a></li>' +
+                    '<li><a href="https://github.com/angular-ui/ui-router">Github Main Page</a></li>' +
+                    '<li><a href="https://github.com/angular-ui/ui-router#quick-start">Quick Start</a></li>' +
+                    '<li><a href="https://github.com/angular-ui/ui-router/wiki">In-Depth Guide</a></li>' +
+                    '<li><a href="https://github.com/angular-ui/ui-router/wiki/Quick-Reference">API Reference</a></li>' +
+                    '</ul>';
                 }, 100);
               }]
           })

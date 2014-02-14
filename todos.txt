@@ -1,0 +1,10 @@
+AngularJs Todos
+------------------------
+Update von Daten Event basiert
+Update von Daten Service basiert
+ngBusy
+Daten persistieren
+Update Angular and Bootstrap
+AnguarUI Components einsetzen
+Testing
+Struktur von angular-fullstack oder angular-app abbilden
